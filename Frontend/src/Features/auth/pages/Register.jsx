@@ -1,29 +1,25 @@
 import React, { useState } from 'react'
 import "../styles/form.scss"
 import { Link } from 'react-router'
-import axios from "axios"
-
+import { useAuth } from '../hooks/useAuth'
 
 const Register = () => {
     const [username, setusername] = useState("")
     const [email, setemail] = useState("")
     const [password, setpassword] = useState("")
+    const {handelregister} = useAuth()
 
 function submithandler(e) {
     e.preventDefault()
 
-    
-    axios.post("http://localhost:3000/api/auth/register",{
-        username,
-        email,
-        password
-    },{
-        withCredentials:true
-    }).then(()=>{
-        setusername("");
+    handelregister(username,email,password).then(res=>{
+        console.log(res)
+            setusername("");
         setemail("");
         setpassword("")
     })
+    
+    
 }
   return (
      <main>
