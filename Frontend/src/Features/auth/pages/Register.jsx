@@ -4,15 +4,17 @@ import { Link } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 
 const Register = () => {
+
+    const {user,loading,handellogin} = useAuth()
+  
     const [username, setusername] = useState("")
     const [email, setemail] = useState("")
     const [password, setpassword] = useState("")
-    const {handelregister} = useAuth()
 
-function submithandler(e) {
+const handelSubmit = async (e) =>{
     e.preventDefault()
 
-    handelregister(username,email,password).then(res=>{
+    await handelregister(username,email,password).then(res=>{
         console.log(res)
             setusername("");
         setemail("");
@@ -21,23 +23,25 @@ function submithandler(e) {
     
     
 }
+
+
   return (
      <main>
       <div className="form-container">
         <h1>Register</h1>
-        <form onSubmit={submithandler} >
+        <form onSubmit={handelSubmit} >
          <input onInput={(e)=>{
             setusername(e.target.value)
-         }} type="text" placeholder='Enter Username' value={username} />
+         }} type="text" placeholder='Enter Username' name='username' id='username' value={username} />
          <input onInput={(e)=>{
             setemail(e.target.value)
-         }} type="text" placeholder='Enter Email' value={email} />
+         }} type="email" placeholder='Enter Email' name='email' id='email' value={email} />
          <input onInput={(e)=>{
             setpassword(e.target.value)
-         }} type="text" placeholder='Enter Password' value={password} />
-         <button>Submit</button>
+         }} type="password" placeholder='Enter Password' name='password' id='password' value={password} />
+         <button className='button primary-button'>Submit</button>
         </form>
-        <p>Already have an Account <Link to="/login">Click here..</Link></p>
+        <p>Already have an Account ? <Link to="/login">Login.</Link></p>
       </div>
     </main>
   )

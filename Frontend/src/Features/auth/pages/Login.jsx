@@ -5,22 +5,23 @@ import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router'
 
 const Login = () => {
+  const {user,loading,handellogin} = useAuth()
+
 const [username, setusername] = useState("")
     const [password, setpassword] = useState("")
   const navigate = useNavigate();
-  const {handellogin,Loading} = useAuth()
+  
 
-  if(Loading){
+  if(loading){
     return(
       <h1>Loading...</h1>
     )
   }
 
-  function submithandler(e) {
+  const handelSubmit = async (e) =>{
     e.preventDefault()
 
-     handellogin(username,password).then(res=>{
-      console.log(res)
+    await handellogin(username,password).then(res=>{
            navigate("/");
           setusername("");
         setpassword("");
@@ -33,16 +34,16 @@ const [username, setusername] = useState("")
     <main>
       <div className="form-container">
         <h1>Login</h1>
-        <form onSubmit={submithandler} >
+        <form onSubmit={handelSubmit} >
          <input onInput={(e)=>{
             setusername(e.target.value)
-         }} type="text" placeholder='Enter Username' value={username} />
+         }} type="text" placeholder='Enter Username' name='username' id='username' value={username} />
          <input onInput={(e)=>{
             setpassword(e.target.value)
-         }} type="text" placeholder='Enter Password' value={password} />
-         <button>Submit</button>
+         }} type="password" placeholder='Enter Password' name='password' id='password' value={password} />
+         <button className='button primary-button'>Submit</button>
         </form>
-        <p>Dont have Account <Link to="/register">Click here..</Link></p>
+        <p>Dont have Account ?<Link to="/register"> Create One.</Link></p>
       </div>
     </main>
   )

@@ -1,6 +1,6 @@
 
 import {RouterProvider} from "react-router-dom"
-import "./Style.scss";
+import "./Features/shared/global.scss";
 import router from "./Routes";
 import { Authprovider } from "./Features/auth/auth.context";
 function App() {
