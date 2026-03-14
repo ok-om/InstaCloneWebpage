@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
 import "../styles/form.scss"
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 
 const Register = () => {
 
-    const {user,loading,handellogin} = useAuth()
+    const {user,loading,handelregister} = useAuth()
   
     const [username, setusername] = useState("")
     const [email, setemail] = useState("")
     const [password, setpassword] = useState("")
 
+    const navigate = useNavigate()
+
 const handelSubmit = async (e) =>{
     e.preventDefault()
 
     await handelregister(username,email,password).then(res=>{
-        console.log(res)
+        navigate("/")
             setusername("");
         setemail("");
         setpassword("")
@@ -23,6 +25,10 @@ const handelSubmit = async (e) =>{
     
     
 }
+
+   if (loading) {
+    return (<main><h1>Loading...</h1></main>)
+   }
 
 
   return (
